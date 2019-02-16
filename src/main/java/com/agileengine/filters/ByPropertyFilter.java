@@ -12,6 +12,12 @@ public interface ByPropertyFilter {
     List<Element> find(List<Element> diffElements, Element matchElement);
 
     static List<ByPropertyFilter> filters() {
-        return Arrays.asList(new ByClassFilter(), new ByTextFilter(), new ByTitleFilter());
+        return Arrays.asList(
+                new ByClassFilter(),
+                new ByOnclickFilter(),
+                new ByTextFilter(),
+                new ByHrefFilter(),
+                new ByRelFilter(),
+                new ByTitleFilter());
     }
 }

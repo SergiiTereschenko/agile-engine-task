@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ByTitleFilter implements ByPropertyFilter {
-    private static final String TITLE_ATTR_KEY = "title";
+public class ByHrefFilter implements ByPropertyFilter {
 
     @Override
     public List<Element> find(List<Element> diffElements, Element matchElement) {
         List<Element> list = new ArrayList<>();
-        String originAttr = matchElement.attr(TITLE_ATTR_KEY);
+        String originAttr = matchElement.attr("href");
 
         for (Element diffElement : diffElements) {
-            if (Objects.equals(diffElement.attr(TITLE_ATTR_KEY), originAttr)) {
+            if (Objects.equals(diffElement.attr("href"), originAttr)) {
                 list.add(diffElement);
             }
         }

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 public class DocumentUtils {
     private static Logger LOGGER = LoggerFactory.getLogger(DocumentUtils.class);
@@ -23,6 +22,9 @@ public class DocumentUtils {
                     htmlFile,
                     CHARSET_NAME,
                     htmlFile.getAbsolutePath());
+
+            if (doc == null) throw new IllegalStateException("There is no file on the path: " + filePath);
+
             return doc;
         } catch (IOException e) {
             LOGGER.error("Error reading [{}] file", htmlFile.getAbsolutePath(), e);
@@ -38,21 +40,21 @@ public class DocumentUtils {
                     CHARSET_NAME,
                     htmlFile.getAbsolutePath());
 
-            return doc.getElementById(targetElementId);
+            Element elementById = doc.getElementById(targetElementId);
+
+            if (elementById == null) throw new IllegalStateException("There is no element with id: " + targetElementId);
+
+            return elementById;
         } catch (IOException e) {
             LOGGER.error("Error reading [{}] file", htmlFile.getAbsolutePath(), e);
             throw new IllegalStateException(e);
         }
     }
 
-    public static Optional<Elements> findElementsByQuery(Document doc, String cssQuery) {
-        Elements select = doc.select(cssQuery);
-        return Optional.of(select);
-    }
-
-    public static Elements getAllElements(String filePath) {
+    public static Elements findLinks(String filePath) {
         Document doc = findDocument(filePath);
-        Elements elements = doc.getAllElements();
+//        Elements elements = doc.getAllElements();
+        Elements elements = doc.select("a");
         return elements;
     }
 }
